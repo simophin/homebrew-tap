@@ -1,4 +1,4 @@
-class Elasticsearch < Formula
+class ElasticsearchNonfree < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
   # NOTE: Do not bump version to one with a non-open-source license
@@ -15,6 +15,7 @@ class Elasticsearch < Formula
 
   depends_on "openjdk@17"
   conflicts_with "elasticsearch-full", because: "both install the same binaries"
+  conflicts_with "elasticsearch", because: "both install the same binaries"
 
   def cluster_name
     "elasticsearch_#{ENV["USER"]}"
