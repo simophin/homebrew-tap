@@ -1,17 +1,10 @@
-class ElasticsearchNonfree < Formula
+class Elasticsearch < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
   # NOTE: Do not bump version to one with a non-open-source license
   url "https://github.com/elastic/elasticsearch/archive/v7.17.10.tar.gz"
   sha256 "ad17f8e2cf5f1d08eac9b7658ebe6737280ddb6a13d6244a296a72ca76da50c6"
   license "Elastic License 2.0"
-
-  bottle do
-    sha256 cellar: :any_skip_relocation, big_sur:      "e199fbcb913252e2f60134de2dfff98bff9ae3f1a28f30f3f44c8b0174e189fb"
-    sha256 cellar: :any_skip_relocation, catalina:     "6bb47c36590116e78d14b1d3bdce0aa091867f5a30007018b9fcac14ca0c3d8b"
-    sha256 cellar: :any_skip_relocation, mojave:       "dbc33bf97783ffae45b4438219a8e4586b82f9939d7c9cdb2398bace6f8ade8b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "4a493d6580c9e3c652ea498b26ca795db6ab56dfeedab8660aa26dd4474feca1"
-  end
 
   depends_on "openjdk@17"
   conflicts_with "elasticsearch-full", because: "both install the same binaries"
