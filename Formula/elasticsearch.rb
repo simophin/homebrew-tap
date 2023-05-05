@@ -2,9 +2,9 @@ class Elasticsearch < Formula
   desc "Distributed search & analytics engine"
   homepage "https://www.elastic.co/products/elasticsearch"
   # NOTE: Do not bump version to one with a non-open-source license
-  url "https://github.com/elastic/elasticsearch/archive/v7.10.2.tar.gz"
-  sha256 "bdb7811882a0d9436ac202a947061b565aa71983c72e1c191e7373119a1cdd1c"
-  license "Apache-2.0"
+  url "https://github.com/elastic/elasticsearch/archive/v7.17.10.tar.gz"
+  sha256 "ad17f8e2cf5f1d08eac9b7658ebe6737280ddb6a13d6244a296a72ca76da50c6"
+  license "Elastic License 2.0"
 
   bottle do
     sha256 cellar: :any_skip_relocation, big_sur:      "e199fbcb913252e2f60134de2dfff98bff9ae3f1a28f30f3f44c8b0174e189fb"
@@ -13,8 +13,8 @@ class Elasticsearch < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux: "4a493d6580c9e3c652ea498b26ca795db6ab56dfeedab8660aa26dd4474feca1"
   end
 
-  depends_on "gradle@6" => :build
-  depends_on "openjdk"
+  depends_on "openjdk@17"
+  conflicts_with "elasticsearch-full", because: "both install the same binaries"
 
   def cluster_name
     "elasticsearch_#{ENV["USER"]}"
@@ -22,12 +22,13 @@ class Elasticsearch < Formula
 
   def install
     os = OS.kernel_name.downcase
-    system "gradle", ":distribution:archives:oss-no-jdk-#{os}-tar:assemble"
+    ENV['JAVA_HOME'] = Language::Java.java_home(version = "17").to_str()
+    system "./gradlew", ":distribution:archives:#{os}-tar:assemble"
 
     mkdir "tar" do
       # Extract the package to the tar directory
       system "tar", "--strip-components=1", "-xf",
-        Dir["../distribution/archives/oss-no-jdk-#{os}-tar/build/distributions/elasticsearch-oss-*.tar.gz"].first
+        Dir["../distribution/archives/#{os}-tar/build/distributions/elasticsearch-*.tar.gz"].first
 
       # Install into package directory
       libexec.install "bin", "lib", "modules"
@@ -76,38 +77,6 @@ class Elasticsearch < Formula
       Logs:    #{var}/log/elasticsearch/#{cluster_name}.log
       Plugins: #{var}/elasticsearch/plugins/
       Config:  #{etc}/elasticsearch/
-    EOS
-  end
-
-  plist_options manual: "elasticsearch"
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-        <dict>
-          <key>KeepAlive</key>
-          <false/>
-          <key>Label</key>
-          <string>#{plist_name}</string>
-          <key>ProgramArguments</key>
-          <array>
-            <string>#{opt_bin}/elasticsearch</string>
-          </array>
-          <key>EnvironmentVariables</key>
-          <dict>
-          </dict>
-          <key>RunAtLoad</key>
-          <true/>
-          <key>WorkingDirectory</key>
-          <string>#{var}</string>
-          <key>StandardErrorPath</key>
-          <string>#{var}/log/elasticsearch.log</string>
-          <key>StandardOutPath</key>
-          <string>#{var}/log/elasticsearch.log</string>
-        </dict>
-      </plist>
     EOS
   end
 
