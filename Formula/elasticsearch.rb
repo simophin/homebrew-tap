@@ -7,7 +7,7 @@ class Elasticsearch < Formula
   license "Elastic License 2.0"
 
   depends_on "openjdk@17"
-  conflicts_with "elasticsearch-full", because: "both install the same binaries"
+  conflicts_with "elastic/tap/elasticsearch-full", because: "both install the same binaries"
   conflicts_with "elasticsearch", because: "both install the same binaries"
 
   def cluster_name
