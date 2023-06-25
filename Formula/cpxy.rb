@@ -1,4 +1,4 @@
-class Devit < Formula
+class Cpxy < Formula
     desc "cpxy homebrew"
     homepage "https://github.com/simophin/cpxy"
     url "https://github.com/simophin/cpxy/archive/refs/tags/v1.6.3.tar.gz"
