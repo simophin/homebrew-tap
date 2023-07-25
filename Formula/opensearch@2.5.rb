@@ -5,6 +5,8 @@ class OpensearchAT25 < Formula
   sha256 "a79fa55320126e0292b6d1b7a5225c8f5cae2c30b5d2784611eb0b71710f9bb7"
   license "Apache-2.0"
 
+  keg_only :versioned_formula
+
   depends_on "gradle" => :build
   depends_on "openjdk"
 
@@ -58,8 +60,6 @@ class OpensearchAT25 < Formula
     ln_s etc/"opensearch", libexec/"config" unless (libexec/"config").exist?
     (var/"opensearch/plugins").mkpath
     ln_s var/"opensearch/plugins", libexec/"plugins" unless (libexec/"plugins").exist?
-    (var/"opensearch/extensions").mkpath
-    ln_s var/"opensearch/extensions", libexec/"extensions" unless (libexec/"extensions").exist?
     # fix test not being able to create keystore because of sandbox permissions
     system bin/"opensearch-keystore", "create" unless (etc/"opensearch/opensearch.keystore").exist?
   end
