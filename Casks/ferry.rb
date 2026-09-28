@@ -5,10 +5,10 @@
 # The Build workflow fills in the @...@ fields (packaging/macos/cask.sh) and
 # pushes the result to the tap as Casks/ferry.rb with each release.
 cask "ferry" do
-  version "1.9.0"
-  sha256 "820cd5610b1c6362eae28f489ab4371c5185dec8fff94ccc14f847d5f28e9f0a"
+  version "1.10.0"
+  sha256 "87b7ef271fdaf87a6739a82687a9cee806c208ac66dfc3099b5c55a93a510bae"
 
-  url "https://github.com/simophin/ferryapp/releases/download/v1.9.0/ferry-1.9.0-macos-universal.dmg"
+  url "https://github.com/simophin/ferryapp/releases/download/v1.10.0/ferry-1.10.0-macos-universal.dmg"
   name "Ferry"
   desc "KDE Connect client: share files and the clipboard with your phone"
   homepage "https://simophin.github.io/ferryapp/"
